@@ -1,0 +1,24 @@
+@use "sass:map";
+
+// Base Colours
+
+$theme-dark: #180000;
+$theme-light: #fffbdb;
+
+$breakpoints: (
+    "small": 768px,
+    "medium": 992px,
+    "large": 1260px,
+    "x-large": 1692px,
+);
+
+@mixin breakpoint($size) {
+    @if map.has-key($breakpoints, $size) {
+        $breakpoint-value: map.get($breakpoints, $size);
+        @media (min-width: $breakpoint-value) {
+        @content;
+        }
+    } @else {
+        @error "No value found for breakpoint '#{$size}'.";
+    }
+}

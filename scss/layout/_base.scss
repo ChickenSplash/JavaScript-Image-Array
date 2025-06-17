@@ -1,3 +1,23 @@
+@use "../utilities/" as *;
+
 body {
-    background-color: aqua;
+    background-color: $theme-dark;
+    color: $theme-light;
+}
+
+.container {
+    width: calc(100% - 30px);
+    margin-inline: auto;
+
+    @include breakpoint("small") {
+        width: 738px;
+    }
+
+    @include breakpoint("large") {
+        width: 962px;
+    }
+
+    @include breakpoint("x-large") {
+        width: 1260px;
+    }
 }

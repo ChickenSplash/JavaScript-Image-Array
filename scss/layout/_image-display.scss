@@ -1,0 +1,14 @@
+@use "../utilities/" as *;
+@use "../modules/" as *;
+
+.container.image-preview {
+    @extend %content-background;
+
+    .image-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        border-radius: 5px;
+    }
+}

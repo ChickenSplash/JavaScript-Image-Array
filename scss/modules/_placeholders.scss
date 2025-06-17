@@ -1,0 +1,8 @@
+@use "../utilities/" as *;
+
+%content-background {
+    background-color: $theme-light;
+    padding: 20px;
+    margin-block: 60px;
+    border-radius: 5px;
+}

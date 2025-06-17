@@ -1,0 +1,5 @@
+@use "../modules/" as *;
+
+.container.image-array {
+    @extend %content-background;
+}

@@ -1,3 +1,4 @@
+
 /* Box sizing rules */
 *,
 *::before,
@@ -19,8 +20,8 @@ figure, blockquote, dl, dd {
 }
 
 /* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
-ul[role=list],
-ol[role=list] {
+ul[role='list'],
+ol[role='list'] {
   list-style: none;
 }
 
@@ -72,44 +73,3 @@ textarea:not([rows]) {
   scroll-margin-block: 5ex;
 }
 
-body {
-  background-color: #180000;
-  color: #fffbdb;
-}
-
-.container {
-  width: calc(100% - 30px);
-  margin-inline: auto;
-}
-@media (min-width: 768px) {
-  .container {
-    width: 738px;
-  }
-}
-@media (min-width: 1260px) {
-  .container {
-    width: 962px;
-  }
-}
-@media (min-width: 1692px) {
-  .container {
-    width: 1260px;
-  }
-}
-
-.container.image-array, .container.image-preview {
-  background-color: #fffbdb;
-  padding: 20px;
-  margin-block: 60px;
-  border-radius: 5px;
-}
-
-.container.image-preview .image-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  border-radius: 5px;
-}
-
-/*# sourceMappingURL=style.css.map */
