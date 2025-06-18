@@ -12,10 +12,31 @@
     </header>
     <div class="container image-preview">
         <div class="image-container">
-            <img src="image/placeholder.png">
+            <img id="randomImage" src="image/placeholder.jpg">
+        </div>
+        <div class="image-controls">
+            <button onclick="fetchImage()" class="btn">
+                <span>Fetch Image</span>
+            </button>
+            <button onclick="storeImage()" class="btn">
+                <span>Add To Collection</span>
+            </button>
+            <label>
+                Pixels Wide<br><input id="width" name="width" value="1280">
+            </label>
+            <label>
+                Pixels High<br><input id="height" name="height" value="720">
+            </label>
+            <label>
+                Email<br><input id="email" name="email">
+            </label>
+            <button onclick="addEmail()" class="btn">
+                <span>Add Email</span>
+            </button>
         </div>
     </div>
     <div class="container image-array">
     </div>
+    <script src="js/app.js"></script>
 </body>
-</html>
+</html> 

@@ -6,7 +6,7 @@ body {
 }
 
 .container {
-    width: calc(100% - 30px);
+    max-width: calc(100% - 30px);
     margin-inline: auto;
 
     @include breakpoint("small") {
