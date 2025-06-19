@@ -1,35 +1,21 @@
 @use "../utilities/" as *;
 @use "../modules/" as *;
 
-.container.image-preview {
-    @extend %content-background;
+.image-preview {
     margin-block: 60px;
 
-    .image {
-        &-container {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            margin-bottom: 30px;
-            
-            
-            img {
-                border-radius: 5px;
-                top: 0;
-            }
-        }
-
-        &-controls {
-            @extend %content-background;
-            background-color: cadetblue;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-
-            .email {
-                width: 100%;
-                margin-bottom: 20px;
-            }
+    .image-container {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        padding-inline: 15px;
+        background-color: $theme-color-dark-1;
+        
+        
+        img {
+            border-radius: 5px;
+            top: 0;
+            max-height: 700px;
         }
     }
 }

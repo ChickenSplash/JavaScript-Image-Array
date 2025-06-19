@@ -2,8 +2,13 @@
 
 // Base Colours
 
-$theme-dark: #180000;
-$theme-light: #fffbdb;
+$theme-color-dark: #010409;
+$theme-color-dark-1: #0D1117;
+$theme-color-dark-2: #262C36;
+$theme-light: #F0F6FC;
+$theme-trim: #4493E9;
+
+$theme-border: rgba($theme-light, 0.2);
 
 $breakpoints: (
     "small": 768px,

@@ -1,7 +1,14 @@
 @use "../utilities/" as *;
 
-%content-background {
-    background-color: $theme-light;
-    padding: 20px;
-    border-radius: 5px;
+%input-field {
+    background-color: $theme-color-dark-2;
+    border: 1px $theme-border solid;
+    padding: 5px 15px;
+    border-radius: 4px;
+    transition: border 0.2s;
+
+    &:focus {
+        border: 1px solid $theme-trim;
+        outline: none;
+    }
 }

@@ -10,33 +10,44 @@
     <header>
         <h1>Image Generator</h1>
     </header>
-    <div class="container image-preview">
+    <div class="image-preview">
         <div class="image-container">
             <img id="randomImage" src="image/placeholder.jpg">
         </div>
-        <div class="image-controls">
+    </div>
+    <div class="image-controls">
+        <div class="main-buttons">
             <button onclick="fetchImage()" class="btn">
                 <span>Fetch Image</span>
             </button>
-            <button onclick="storeImage()" class="btn">
+            <button onclick="addToCollection()" class="btn">
                 <span>Add To Collection</span>
             </button>
-            <label>
-                Pixels Wide<br><input id="width" name="width" value="1280">
-            </label>
-            <label>
-                Pixels High<br><input id="height" name="height" value="720">
-            </label>
-            <label>
-                Email<br><input id="email" name="email">
-            </label>
+        </div>
+        <div class="dimensions">
+            <span>Dimensions: </span>
+            <input id="width" type="number" placeholder="Width" name="width" max="9999" value="1280">
+            <span>x</span>
+            <input id="height" type="number" placeholder="Height" name="height" max="9999" value="720">
+        </div>
+        <div class="add-email">
+            <input id="email" type="text" placeholder="Add an Email" name="email">
             <button onclick="addEmail()" class="btn">
-                <span>Add Email</span>
+                <span>+</span>
             </button>
         </div>
+        <div class="selector">
+            <select id="emailSelect">
+                <!-- Options to be added dynamically -->
+            </select>
+        </div>
+    </div>
+    <div class="container">
+        <h2 class="image-array-header">Collection for [Email]</h2>
     </div>
     <div class="container image-array">
+        <!-- Images load dynamically -->
     </div>
     <script src="js/app.js"></script>
 </body>
-</html> 
+</html>

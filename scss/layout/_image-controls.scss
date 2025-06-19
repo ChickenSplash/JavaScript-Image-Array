@@ -1,0 +1,103 @@
+@use "../utilities/" as *;
+@use "../modules/" as *;
+
+.image-controls {
+    background-color: $theme-color-dark-1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 1.25rem;
+    padding-block: 30px;
+
+    input, select {
+        @extend %input-field;
+    }
+
+    .dimensions {
+        display: flex;
+        margin-bottom: 20px;
+        height: 48px;
+        width: 360px;
+
+        input {
+            @extend %input-field;
+            height: 100%;
+            text-align: center;
+            width: 70px;
+            flex-grow: 1;
+
+            &::-webkit-outer-spin-button, &::-webkit-inner-spin-button { // remove the arrows
+                -webkit-appearance: none;
+                margin: 0;
+            }
+
+            &:nth-child(2) {
+                border-radius: 0px;
+                border-inline: 0px;
+            }
+
+            &:nth-child(4) {
+                border-top-left-radius: 0px;
+                border-bottom-left-radius: 0px;
+                border-left: 0px;
+            }
+        }
+
+        span {
+            @extend %input-field;
+            display: inline-flex;
+            align-items: center;
+            height: 100%;
+
+            &:nth-child(1) {
+                border-top-right-radius: 0px;
+                border-bottom-right-radius: 0px;
+                border-right: 0px;
+            }
+
+            &:nth-child(3) {
+                border-radius: 0px;
+                border-inline: 0px;
+            }
+        }
+    }
+
+    .main-buttons {
+        width: 360px;
+
+        button {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+    }
+
+    .add-email {
+        display: flex;
+        height: 48px;
+        width: 360px;
+        margin-bottom: 20px;
+
+        input {
+            flex-grow: 1;
+            height: 100%;
+            border-bottom-right-radius: 0px;
+            border-top-right-radius: 0px;
+            border-right: none;
+        }
+
+        button {
+            border-bottom-left-radius: 0px;
+            border-top-left-radius: 0px;
+            height: 100%;
+        }
+    }
+
+    .selector {
+        height: 48px;
+
+        select {
+            height: 100%;
+            width: 360px;
+        }
+    }
+}

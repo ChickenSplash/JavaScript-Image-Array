@@ -1,5 +1,25 @@
 @use "../modules/" as *;
+@use "../utilities/" as *;
 
 .container.image-array {
-    @extend %content-background;
+    background-color: $theme-color-dark-1;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    column-count: 5;    
+    column-gap: 10px;
+    padding: 10px;
+
+    img {
+        width: 100%;
+        height: auto;
+        display: block;
+        margin-bottom: 10px;
+        border-radius: 4px;
+        max-height: 400px;
+        object-fit: cover;  
+    }
+}
+
+.image-array-header {
+    margin-block: 60px;
 }

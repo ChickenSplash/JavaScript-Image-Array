@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap");
 /* Box sizing rules */
 *,
 *::before,
@@ -60,6 +61,7 @@ input, button,
 textarea, select {
   font-family: inherit;
   font-size: inherit;
+  color: inherit;
 }
 
 /* Make sure textareas without a rows attribute are not tiny */
@@ -73,8 +75,9 @@ textarea:not([rows]) {
 }
 
 body {
-  background-color: #180000;
-  color: #fffbdb;
+  background-color: #010409;
+  color: #F0F6FC;
+  font-family: "Space Grotesk", serif;
 }
 
 .container {
@@ -97,34 +100,147 @@ body {
   }
 }
 
-.container.image-array, .container.image-preview, .container.image-preview .image-controls {
-  background-color: #fffbdb;
-  padding: 20px;
-  border-radius: 5px;
+.image-controls input, .image-controls select, .image-controls .dimensions input, .image-controls .dimensions span {
+  background-color: #262C36;
+  border: 1px rgba(240, 246, 252, 0.2) solid;
+  padding: 5px 15px;
+  border-radius: 4px;
+  transition: border 0.2s;
+}
+.image-controls input:focus, .image-controls select:focus, .image-controls .dimensions span:focus {
+  border: 1px solid #4493E9;
+  outline: none;
 }
 
-.container.image-preview {
+button {
+  background-color: #262C36;
+  border: 1px rgba(240, 246, 252, 0.2) solid;
+  border-radius: 4px;
+  padding: 10px 20px;
+  transition: border 0.2s, background-color 0.2s;
+}
+button:hover {
+  border: 1px #4493E9 solid;
+  background-color: rgb(16.9347826087, 19.6086956522, 24.0652173913);
+  cursor: pointer;
+}
+
+.image-preview {
   margin-block: 60px;
 }
-.container.image-preview .image-container {
+.image-preview .image-container {
   display: flex;
-  justify-content: space-around;
-  align-items: center;
-  margin-bottom: 30px;
+  justify-content: center;
+  align-items: flex-start;
+  padding-inline: 15px;
+  background-color: #0D1117;
 }
-.container.image-preview .image-container img {
+.image-preview .image-container img {
   border-radius: 5px;
   top: 0;
+  max-height: 700px;
 }
-.container.image-preview .image-controls {
-  background-color: cadetblue;
+
+.image-controls {
+  background-color: #0D1117;
   display: flex;
   flex-direction: column;
   align-items: center;
+  font-size: 1.25rem;
+  padding-block: 30px;
 }
-.container.image-preview .image-controls .email {
+.image-controls .dimensions {
+  display: flex;
+  margin-bottom: 20px;
+  height: 48px;
+  width: 360px;
+}
+.image-controls .dimensions input {
+  height: 100%;
+  text-align: center;
+  width: 70px;
+  flex-grow: 1;
+}
+.image-controls .dimensions input::-webkit-outer-spin-button, .image-controls .dimensions input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.image-controls .dimensions input:nth-child(2) {
+  border-radius: 0px;
+  border-inline: 0px;
+}
+.image-controls .dimensions input:nth-child(4) {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-left: 0px;
+}
+.image-controls .dimensions span {
+  display: inline-flex;
+  align-items: center;
+  height: 100%;
+}
+.image-controls .dimensions span:nth-child(1) {
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  border-right: 0px;
+}
+.image-controls .dimensions span:nth-child(3) {
+  border-radius: 0px;
+  border-inline: 0px;
+}
+.image-controls .main-buttons {
+  width: 360px;
+}
+.image-controls .main-buttons button {
   width: 100%;
   margin-bottom: 20px;
+}
+.image-controls .add-email {
+  display: flex;
+  height: 48px;
+  width: 360px;
+  margin-bottom: 20px;
+}
+.image-controls .add-email input {
+  flex-grow: 1;
+  height: 100%;
+  border-bottom-right-radius: 0px;
+  border-top-right-radius: 0px;
+  border-right: none;
+}
+.image-controls .add-email button {
+  border-bottom-left-radius: 0px;
+  border-top-left-radius: 0px;
+  height: 100%;
+}
+.image-controls .selector {
+  height: 48px;
+}
+.image-controls .selector select {
+  height: 100%;
+  width: 360px;
+}
+
+.container.image-array {
+  background-color: #0D1117;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  column-count: 5;
+  column-gap: 10px;
+  padding: 10px;
+}
+.container.image-array img {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  max-height: 400px;
+  object-fit: cover;
+}
+
+.image-array-header {
+  margin-block: 60px;
 }
 
 /*# sourceMappingURL=style.css.map */

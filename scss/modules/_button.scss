@@ -1,0 +1,16 @@
+@use "../utilities/" as *;
+@use "sass:color";
+
+button {
+    background-color: $theme-color-dark-2;
+    border: 1px $theme-border solid;
+    border-radius: 4px;
+    padding: 10px 20px;
+    transition: border 0.2s, background-color 0.2s;
+
+    &:hover {
+        border: 1px $theme-trim solid;
+        background-color: color.adjust($theme-color-dark-2, $lightness: -10%);
+        cursor: pointer;
+    }
+}
