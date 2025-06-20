@@ -1,40 +1,74 @@
-let currentImageUrl = "";
+// tracks the currently displayed image
+let currentImageUrl = "https://fastly.picsum.photos/id/330/1280/720.jpg?hmac=KDp5Bdt2uCJB714pteQPfv723GLJxsTH--dfFwQxxxo";
+// tracks the currently displayed image
+let currentIndex = 0;
+const previouslyLoadedImages = [
+    "https://fastly.picsum.photos/id/330/1280/720.jpg?hmac=KDp5Bdt2uCJB714pteQPfv723GLJxsTH--dfFwQxxxo",
+];
+const imgElement = document.getElementById('randomImage');
+const loader = document.querySelector(".loader");
+
+function initiateLoading() {
+    if (!loader.classList.contains("active")) {
+        loader.classList.add("active")
+        imgElement.classList.add("loading-blur")
+        fetchImage();
+    } else {
+        showPopUp("Previous request still loading", success = false);
+    }
+}
 
 function fetchImage() {
     const width = document.querySelector("#width").value;
     const height = document.querySelector("#height").value;
-    const imgElement = document.getElementById('randomImage');
-    const loader = document.querySelector(".loader");
-
-    function toggleLoading() {
-        if (loader.classList.contains("active")) {
-            loader.classList.remove("active");
-            imgElement.classList.remove("loading-blur");
-        } else {
-            loader.classList.add("active")
-            imgElement.classList.add("loading-blur")
-        }
-    }
-
-    toggleLoading();
  
     fetch(`https://picsum.photos/${width}/${height}`)
         .then(response => {
             if (!response.ok || !width || !height) { // is the respons not ok or no width value or no height value?
                 throw new Error('HTTP error: ' + response.status);
             }
-            currentImageUrl = response.url; // useful for if user wants to add current displayed image to collection, we have its value here for each new image
+            currentImageUrl = response.url;
             return response.blob();
         })
         .then(data => {
             const imageURL = URL.createObjectURL(data);
             imgElement.src = imageURL;
+            previouslyLoadedImages.push(currentImageUrl);
+            currentIndex++;
         })
         .catch(error => {
             console.warn('Failed to fetch image:', error);
             showPopUp("Failed to load image", success = false);
         })
-        .finally(toggleLoading);
+        .finally(() => {
+            loader.classList.remove("active");
+            imgElement.classList.remove("loading-blur");
+        });
+}
+
+const prevBtn = document.getElementById('prev-btn');
+const nextBtn = document.getElementById('next-btn');
+
+
+function showImage() {
+    console.log(currentIndex)
+    imgElement.src = previouslyLoadedImages[currentIndex];
+    currentImageUrl = previouslyLoadedImages[currentIndex];
+}
+
+
+function prevImage() {
+    if (currentIndex > 0) {
+        currentIndex--;
+        showImage();
+    }
+}
+
+function nextImage() {
+    if (currentIndex < previouslyLoadedImages.length - 1) {
+        currentIndex++;
+        showImage();
+    }
 }
 
 const emailSelect = document.getElementById("emailSelect");
@@ -162,3 +196,4 @@ $(".is-hidden").hide();
 
 updateSelection();
 refreshImageArray();
+showImage();

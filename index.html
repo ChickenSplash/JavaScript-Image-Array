@@ -13,12 +13,14 @@
     <div class="image-preview">
         <div class="image-container">
             <div class="loader"></div>
-            <img id="randomImage" src="image/placeholder.jpg">
+            <img id="randomImage" src="">
         </div>
     </div>
+    <button id="prev-btn" onclick="prevImage()">⟵ Previous</button>
+    <button id="next-btn" onclick="nextImage()">Next ⟶</button>
     <div class="image-controls">
         <div class="main-buttons">
-            <button onclick="fetchImage()" class="btn">
+            <button onclick="initiateLoading()" class="btn">
                 <span>Fetch Image</span>
             </button>
             <button onclick="addToCollection()" class="btn">
@@ -39,7 +41,7 @@
         </div>
         <div class="selector">
             <select id="emailSelect">
-                <!-- Options to be added dynamically -->
+                <!-- Options added dynamically -->
             </select>
         </div>
     </div>
