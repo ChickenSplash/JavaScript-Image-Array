@@ -2,12 +2,12 @@
 @use "../modules/" as *;
 
 .image-preview {
-    margin-block: 60px;
+    margin-top: 60px;
 
     .image-container {
         display: flex;
         justify-content: center;
-        align-items: flex-start;
+        align-items: center;
         padding-inline: 15px;
         background-color: $theme-color-dark-1;
         
@@ -19,3 +19,21 @@
         }
     }
 }
+
+// Loading animations
+.loading-blur {
+    filter: blur(3px);
+}
+
+/* HTML: <div class="loader"></div> */
+.loader.active {
+    position: absolute;
+    z-index: 500;
+    width: 50px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 8px solid;
+    border-color: $theme-trim #0000;
+    animation: l1 1s infinite;
+}
+@keyframes l1 {to{transform: rotate(.5turn)}}

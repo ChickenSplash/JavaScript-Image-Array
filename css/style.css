@@ -100,6 +100,10 @@ body {
   }
 }
 
+h1 {
+  margin-top: 30px;
+}
+
 .image-controls input, .image-controls select, .image-controls .dimensions input, .image-controls .dimensions span {
   background-color: #262C36;
   border: 1px rgba(240, 246, 252, 0.2) solid;
@@ -125,13 +129,29 @@ button:hover {
   cursor: pointer;
 }
 
+.success, .warning {
+  width: 100%;
+  padding: 20px;
+  font-weight: bold;
+  font-size: 1.25rem;
+  text-align: center;
+}
+
+.warning {
+  background-color: darkred;
+}
+
+.success {
+  background-color: darkgreen;
+}
+
 .image-preview {
-  margin-block: 60px;
+  margin-top: 60px;
 }
 .image-preview .image-container {
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   padding-inline: 15px;
   background-color: #0D1117;
 }
@@ -141,6 +161,27 @@ button:hover {
   max-height: 700px;
 }
 
+.loading-blur {
+  filter: blur(3px);
+}
+
+/* HTML: <div class="loader"></div> */
+.loader.active {
+  position: absolute;
+  z-index: 500;
+  width: 50px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 8px solid;
+  border-color: #4493E9 rgba(0, 0, 0, 0);
+  animation: l1 1s infinite;
+}
+
+@keyframes l1 {
+  to {
+    transform: rotate(0.5turn);
+  }
+}
 .image-controls {
   background-color: #0D1117;
   display: flex;
@@ -148,6 +189,7 @@ button:hover {
   align-items: center;
   font-size: 1.25rem;
   padding-block: 30px;
+  margin-top: 60px;
 }
 .image-controls .dimensions {
   display: flex;
@@ -228,6 +270,7 @@ button:hover {
   column-count: 5;
   column-gap: 10px;
   padding: 10px;
+  min-height: 900px;
 }
 .container.image-array img {
   width: 100%;
@@ -235,7 +278,7 @@ button:hover {
   display: block;
   margin-bottom: 10px;
   border-radius: 4px;
-  max-height: 400px;
+  max-height: 255px;
   object-fit: cover;
 }
 

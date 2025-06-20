@@ -3,10 +3,24 @@ let currentImageUrl = "";
 function fetchImage() {
     const width = document.querySelector("#width").value;
     const height = document.querySelector("#height").value;
+    const imgElement = document.getElementById('randomImage');
+    const loader = document.querySelector(".loader");
 
+    function toggleLoading() {
+        if (loader.classList.contains("active")) {
+            loader.classList.remove("active");
+            imgElement.classList.remove("loading-blur");
+        } else {
+            loader.classList.add("active")
+            imgElement.classList.add("loading-blur")
+        }
+    }
+
+    toggleLoading();
+ 
     fetch(`https://picsum.photos/${width}/${height}`)
         .then(response => {
-            if (!response.ok) {
+            if (!response.ok || !width || !height) { // is the respons not ok or no width value or no height value?
                 throw new Error('HTTP error: ' + response.status);
             }
             currentImageUrl = response.url; // useful for if user wants to add current displayed image to collection, we have its value here for each new image
@@ -14,12 +28,13 @@ function fetchImage() {
         })
         .then(data => {
             const imageURL = URL.createObjectURL(data);
-            const imgElement = document.getElementById('randomImage');
             imgElement.src = imageURL;
         })
         .catch(error => {
-            console.error('Failed to fetch image:', error);
-        });
+            console.warn('Failed to fetch image:', error);
+            showPopUp("Failed to load image", success = false);
+        })
+        .finally(toggleLoading);
 }
 
 const emailSelect = document.getElementById("emailSelect");
@@ -46,11 +61,16 @@ function refreshImageArray() {
 emailSelect.addEventListener("change", refreshImageArray);
 
 function addToCollection() {
-    if (!imageCollections[emailSelect.value].includes(currentImageUrl)) {
-        imageCollections[emailSelect.value].push(currentImageUrl)
-        refreshImageArray();
+    if (currentImageUrl) { // does the image url exist?
+        if (!imageCollections[emailSelect.value].includes(currentImageUrl)) { // if so, does the currently selected email not have this url in its array?
+            imageCollections[emailSelect.value].push(currentImageUrl)
+            refreshImageArray();
+            showPopUp("Added to current collection", success = true);
+        } else {
+            showPopUp("Image already in current collection", success = false);
+        }
     } else {
-        console.log("Current image is already in collection") // will update to give user feedback
+        showPopUp("There was a problem adding this image", success = false);
     }
 }
 
@@ -74,15 +94,20 @@ const emailPattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"
 
 function addEmail() {
     const emailInput = document.querySelector("#email");
-    const email = emailInput.value.trim();
-    if (emailPattern.test(email)) {
-        imageCollections[email] = [];
-        updateSelection();
-        emailSelect.value = email;
-        emailInput.value = "";
-        refreshImageArray();
+    const email = emailInput.value.trim().toLowerCase();
+    if (emailPattern.test(email)) { // is it a valid email?
+        if (!(email in imageCollections)) { // does it not exist? run this to add email
+            imageCollections[email] = [];
+            updateSelection();
+            emailSelect.value = email;
+            emailInput.value = "";
+            refreshImageArray();
+            showPopUp("Email added", success = true);
+        } else {
+            showPopUp("Email already exists", success = false);
+        }
     } else {
-        console.log("Invalid Email") // will update to give user feedback
+        showPopUp("Invalid email", success = false);
     }
 }
 
@@ -98,5 +123,42 @@ function updateSelection() {
     }
 }
 
-updateSelection()
+const warningBox = document.querySelector(".warning");
+const successBox = document.querySelector(".success");
+const warningMsg = document.querySelector(".warning div");
+const successMsg = document.querySelector(".success div");
+
+let popupTimer = null;
+
+function showPopUp(message, success) {
+    const box = success ? successBox : warningBox;
+    const msg = success ? successMsg : warningMsg;
+
+    // Hide both boxes and clear any running timers
+    [warningBox, successBox].forEach(el => {
+        $(el).stop(true, true).hide();
+    });
+    if (popupTimer) {
+        clearTimeout(popupTimer);
+        popupTimer = null;
+    }
+    
+    msg.innerHTML = `<p>${message}</p>`;
+
+    // Show the correct box
+    $(box)
+        .stop(true, true)
+        .css('display', 'none')
+        .slideDown(350, function() {
+            // After sliding down, start the timer
+            popupTimer = setTimeout(() => {
+                $(box).slideUp(350);
+                popupTimer = null;
+            }, 5000);
+        });
+}
+
+$(".is-hidden").hide();
+
+updateSelection();
 refreshImageArray();

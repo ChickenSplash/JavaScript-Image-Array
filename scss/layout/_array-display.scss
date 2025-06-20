@@ -8,6 +8,7 @@
     column-count: 5;    
     column-gap: 10px;
     padding: 10px;
+    min-height: 900px;
 
     img {
         width: 100%;
@@ -15,7 +16,7 @@
         display: block;
         margin-bottom: 10px;
         border-radius: 4px;
-        max-height: 400px;
+        max-height: 255px;
         object-fit: cover;  
     }
 }
