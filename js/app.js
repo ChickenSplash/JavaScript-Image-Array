@@ -1,6 +1,4 @@
 // tracks the currently displayed image
-let currentImageUrl = "https://fastly.picsum.photos/id/330/1280/720.jpg?hmac=KDp5Bdt2uCJB714pteQPfv723GLJxsTH--dfFwQxxxo";
-// tracks the currently displayed image
 let currentIndex = 0;
 const previouslyLoadedImages = [
     "https://fastly.picsum.photos/id/330/1280/720.jpg?hmac=KDp5Bdt2uCJB714pteQPfv723GLJxsTH--dfFwQxxxo",
@@ -14,7 +12,7 @@ function initiateLoading() {
         imgElement.classList.add("loading-blur")
         fetchImage();
     } else {
-        showPopUp("Previous request still loading", success = false);
+        showPopUp("Previous request still loading");
     }
 }
 
@@ -27,18 +25,18 @@ function fetchImage() {
             if (!response.ok || !width || !height) { // is the respons not ok or no width value or no height value?
                 throw new Error('HTTP error: ' + response.status);
             }
-            currentImageUrl = response.url;
+            previouslyLoadedImages.push(response.url);
+            currentIndex = previouslyLoadedImages.length - 1;
+            updateCounter();
             return response.blob();
         })
-        .then(data => {
+        .then(data => { // loads the url to the loaded image
             const imageURL = URL.createObjectURL(data);
             imgElement.src = imageURL;
-            previouslyLoadedImages.push(currentImageUrl);
-            currentIndex++;
         })
         .catch(error => {
             console.warn('Failed to fetch image:', error);
-            showPopUp("Failed to load image", success = false);
+            showPopUp("Failed to load image");
         })
         .finally(() => {
             loader.classList.remove("active");
@@ -46,21 +44,24 @@ function fetchImage() {
         });
 }
 
-const prevBtn = document.getElementById('prev-btn');
-const nextBtn = document.getElementById('next-btn');
+const prevBtn = document.getElementById("prev-btn");
+const nextBtn = document.getElementById("next-btn");
+const counter = document.querySelector(".counter")
 
 
 function showImage() {
-    console.log(currentIndex)
     imgElement.src = previouslyLoadedImages[currentIndex];
-    currentImageUrl = previouslyLoadedImages[currentIndex];
 }
 
+function updateCounter() {
+    counter.textContent = currentIndex;
+}
 
 function prevImage() {
     if (currentIndex > 0) {
         currentIndex--;
         showImage();
+        updateCounter();
     }
 }
 
@@ -68,6 +69,7 @@ function nextImage() {
     if (currentIndex < previouslyLoadedImages.length - 1) {
         currentIndex++;
         showImage();
+        updateCounter();
     }
 }
 
@@ -95,16 +97,16 @@ function refreshImageArray() {
 emailSelect.addEventListener("change", refreshImageArray);
 
 function addToCollection() {
-    if (currentImageUrl) { // does the image url exist?
-        if (!imageCollections[emailSelect.value].includes(currentImageUrl)) { // if so, does the currently selected email not have this url in its array?
-            imageCollections[emailSelect.value].push(currentImageUrl)
+    if (previouslyLoadedImages[currentIndex]) { // does the image url exist?
+        if (!imageCollections[emailSelect.value].includes(previouslyLoadedImages[currentIndex])) { // if so, does the currently selected email not have this url in its array?
+            imageCollections[emailSelect.value].push(previouslyLoadedImages[currentIndex])
             refreshImageArray();
-            showPopUp("Added to current collection", success = true);
+            showPopUp("Added to current collection", "#007000");
         } else {
-            showPopUp("Image already in current collection", success = false);
+            showPopUp("Image already in current collection");
         }
     } else {
-        showPopUp("There was a problem adding this image", success = false);
+        showPopUp("There was a problem adding this image");
     }
 }
 
@@ -124,24 +126,24 @@ const imageCollections = {
     ],
 };
 
-const emailPattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
 function addEmail() {
     const emailInput = document.querySelector("#email");
     const email = emailInput.value.trim().toLowerCase();
-    if (emailPattern.test(email)) { // is it a valid email?
+    if (emailRegex.test(email)) { // is it a valid email?
         if (!(email in imageCollections)) { // does it not exist? run this to add email
             imageCollections[email] = [];
             updateSelection();
             emailSelect.value = email;
             emailInput.value = "";
             refreshImageArray();
-            showPopUp("Email added", success = true);
+            showPopUp("Email added", "#007000");
         } else {
-            showPopUp("Email already exists", success = false);
+            showPopUp("Email already exists");
         }
     } else {
-        showPopUp("Invalid email", success = false);
+        showPopUp("Invalid email");
     }
 }
 
@@ -157,36 +159,30 @@ function updateSelection() {
     }
 }
 
-const warningBox = document.querySelector(".warning");
-const successBox = document.querySelector(".success");
-const warningMsg = document.querySelector(".warning div");
-const successMsg = document.querySelector(".success div");
-
+const warningBox = document.querySelector(".popup");
 let popupTimer = null;
 
-function showPopUp(message, success) {
-    const box = success ? successBox : warningBox;
-    const msg = success ? successMsg : warningMsg;
+function showPopUp(message, color = "#700000") {
 
     // Hide both boxes and clear any running timers
-    [warningBox, successBox].forEach(el => {
-        $(el).stop(true, true).hide();
-    });
+    $(warningBox).stop(true, true).hide();
+
     if (popupTimer) {
         clearTimeout(popupTimer);
         popupTimer = null;
     }
     
-    msg.innerHTML = `<p>${message}</p>`;
+    warningBox.innerHTML = `<span>${message}</span>`;
+    warningBox.style.backgroundColor = color;
 
     // Show the correct box
-    $(box)
+    $(warningBox)
         .stop(true, true)
-        .css('display', 'none')
+        .css("display", "none")
         .slideDown(350, function() {
             // After sliding down, start the timer
             popupTimer = setTimeout(() => {
-                $(box).slideUp(350);
+                $(warningBox).slideUp(350);
                 popupTimer = null;
             }, 5000);
         });

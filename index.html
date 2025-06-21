@@ -8,7 +8,7 @@
 </head>
 <body>
     <header class="container">
-        <h1>Image Generator</h1>
+        <h1>Random Image Fetcher</h1>
     </header>
     <div class="image-preview">
         <div class="image-container">
@@ -16,15 +16,15 @@
             <img id="randomImage" src="">
         </div>
     </div>
-    <button id="prev-btn" onclick="prevImage()">⟵ Previous</button>
-    <button id="next-btn" onclick="nextImage()">Next ⟶</button>
-    <div class="image-controls">
-        <div class="main-buttons">
+    <div class="container image-controls">
+        <div class="arrow-button">
+            <button id="prev-btn" onclick="prevImage()" class="btn"><</button>
+            <span class="counter">0</span>
+            <button id="next-btn" onclick="nextImage()" class="btn">></button>
+        </div>
+        <div class="main-button">
             <button onclick="initiateLoading()" class="btn">
                 <span>Fetch Image</span>
-            </button>
-            <button onclick="addToCollection()" class="btn">
-                <span>Add To Collection</span>
             </button>
         </div>
         <div class="dimensions">
@@ -39,24 +39,22 @@
                 <span>+</span>
             </button>
         </div>
+        <div class="main-button">
+            <button onclick="addToCollection()" class="btn">
+                <span>Add To Collection</span>
+            </button>
+        </div>
         <div class="selector">
             <select id="emailSelect">
                 <!-- Options added dynamically -->
             </select>
         </div>
     </div>
-    <div class="warning is-hidden">
-        <div class="container">
-            <!-- Message added dynamically -->
-        </div>
-    </div>
-    <div class="success is-hidden">
-        <div class="container">
-            <!-- Message added dynamically -->
-        </div>
+    <div class=" popup container is-hidden">
+        <span><!-- Message added dynamically --></span>
     </div>
     <div class="container">
-        <h2 class="image-array-header">Collection for [Email]</h2>
+        <h2 class="image-array-header"><!-- Message added dynamically --></h2>
     </div>
     <div class="container image-array">
         <!-- Images load dynamically -->
