@@ -80,16 +80,69 @@ const imageArrayHeader = document.querySelector(".image-array-header");
 // refresh the images array display
 
 function refreshImageArray() {
-    // update the section header
-    imageArrayHeader.textContent = `Collection for ${emailSelect.value}`
-    // update the images displayed
     imageArray.innerHTML = "";
     
-    for (let pictureUrl of imageCollections[emailSelect.value]) {
-        const img = document.createElement("img");
-        img.src = pictureUrl;   
-        imageArray.appendChild(img);
-    }
+    if (emailSelect.value) { // does an email exist?
+        imageArrayHeader.innerHTML = "";
+        const header = document.createElement("h2");
+        header.innerHTML = `Collection for ${emailSelect.value}`;
+        imageArrayHeader.appendChild(header);
+
+        for (let pictureUrl of imageCollections[emailSelect.value]) { // for each url inside the email collection, add image as well as the delete button that then deletes itself from the collection
+            const imgContainer = document.createElement("a"); // add the image container
+            imgContainer.classList.add("img-container");
+            imgContainer.href = pictureUrl;
+            imgContainer.setAttribute("target", "_blank");
+            
+            const img = document.createElement("img"); // add the image
+            img.src = pictureUrl;
+    
+            const deleteBtn = document.createElement("button"); // add the button and its functionality
+            deleteBtn.textContent = "X";
+            deleteBtn.addEventListener("click", (event) => {
+                event.preventDefault();
+                const imgSrc = event.target.parentElement.querySelector("img").src;
+                const imgIndex = imageCollections[emailSelect.value].indexOf(imgSrc);
+                if (imgIndex !== -1) { // did the url exist?
+                    imageCollections[emailSelect.value].splice(imgIndex, 1);
+                    refreshImageArray();
+                    showPopUp("Image Deleted", "#007000");
+                }
+            });
+    
+            imgContainer.appendChild(img);
+            imgContainer.appendChild(deleteBtn);
+            
+            imageArray.appendChild(imgContainer);
+        }
+        
+        if (imageCollections[emailSelect.value].length === 0) { // is the currently selected array empty?
+            // if so, add the button allowing the user to delete the email/collection
+            const deleteMessage = document.createElement('div');
+            deleteMessage.className = 'delete-message';
+            
+            const heading1 = document.createElement('h2');
+            heading1.textContent = 'Looks empty in here...';
+
+            const deleteEmailBtn = document.createElement('button');
+            deleteEmailBtn.textContent = 'Delete Collection';
+            deleteEmailBtn.addEventListener("click", () => {
+                delete imageCollections[emailSelect.value];
+                updateSelection();
+                refreshImageArray();
+                showPopUp("Collection Deleted", "#007000");
+            });
+
+            const heading2 = document.createElement('h2');
+            heading2.textContent = '?';
+
+            deleteMessage.appendChild(heading1);
+            deleteMessage.appendChild(deleteEmailBtn);
+            deleteMessage.appendChild(heading2);
+
+            imageArray.appendChild(deleteMessage);
+        }
+    } 
 }
 
 // calls the freshly declared function upon changing the email selection or adding an item to the array
@@ -97,16 +150,16 @@ function refreshImageArray() {
 emailSelect.addEventListener("change", refreshImageArray);
 
 function addToCollection() {
-    if (previouslyLoadedImages[currentIndex]) { // does the image url exist?
+    if (emailSelect.value) { // does the image url or email exist?
         if (!imageCollections[emailSelect.value].includes(previouslyLoadedImages[currentIndex])) { // if so, does the currently selected email not have this url in its array?
-            imageCollections[emailSelect.value].push(previouslyLoadedImages[currentIndex])
+            imageCollections[emailSelect.value].push(previouslyLoadedImages[currentIndex]);
             refreshImageArray();
             showPopUp("Added to current collection", "#007000");
         } else {
             showPopUp("Image already in current collection");
         }
     } else {
-        showPopUp("There was a problem adding this image");
+        showPopUp("Add an email first");
     }
 }
 
@@ -126,7 +179,7 @@ const imageCollections = {
     ],
 };
 
-const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 function addEmail() {
     const emailInput = document.querySelector("#email");

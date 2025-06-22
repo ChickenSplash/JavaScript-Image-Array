@@ -74,6 +74,11 @@ textarea:not([rows]) {
   scroll-margin-block: 5ex;
 }
 
+a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
 body {
   background-color: #010409;
   color: #F0F6FC;
@@ -176,7 +181,7 @@ button:hover {
   background-color: #0D1117;
   font-size: 1.25rem;
   padding: 20px;
-  margin-top: 60px;
+  margin-top: 30px;
   border-radius: 5px;
 }
 .image-controls .dimensions {
@@ -226,12 +231,10 @@ button:hover {
 .image-controls .arrow-button > *:nth-child(1) {
   border-top-right-radius: 0px;
   border-bottom-right-radius: 0px;
-  border-right: 0px;
 }
 .image-controls .arrow-button > *:nth-child(3) {
   border-top-left-radius: 0px;
   border-bottom-left-radius: 0px;
-  border-left: 0px;
 }
 .image-controls .arrow-button span {
   display: inline-flex;
@@ -268,6 +271,11 @@ button:hover {
   height: 100%;
   width: 100%;
 }
+.image-controls .selector select:hover {
+  border: 1px #4493E9 solid;
+  background-color: rgb(16.9347826087, 19.6086956522, 24.0652173913);
+  cursor: pointer;
+}
 @media (min-width: 768px) {
   .image-controls {
     display: grid;
@@ -289,49 +297,80 @@ button:hover {
   }
 }
 
-.popup {
-  padding: 20px;
+.message.container {
+  position: relative;
+}
+.message.container .popup {
+  position: absolute;
+  width: 100%;
+  padding: 15px;
+  border-radius: 5px;
   font-weight: bold;
   font-size: 1.25rem;
   text-align: center;
 }
 
 .container.image-array {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-template-rows: repeat(2, 250px);
+  grid-auto-rows: 250px;
+  gap: 20px;
   background-color: #0D1117;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
-  column-count: 1;
-  column-gap: 10px;
-  padding: 10px;
-  min-height: 900px;
+  padding: 20px;
+}
+.container.image-array .img-container {
+  display: block;
+  position: relative;
+}
+.container.image-array .img-container button {
+  display: none;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  height: 48px;
+}
+.container.image-array .img-container:hover button {
+  display: block;
 }
 .container.image-array img {
-  width: 100%;
-  height: auto;
-  display: block;
-  margin-bottom: 10px;
-  border-radius: 4px;
-  max-height: 255px;
   object-fit: cover;
+  width: 100%;
+  height: 100%;
+  display: block;
+  border-radius: 4px;
 }
 @media (min-width: 768px) {
   .container.image-array {
-    column-count: 2;
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 @media (min-width: 1260px) {
   .container.image-array {
-    column-count: 3;
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 @media (min-width: 1692px) {
   .container.image-array {
-    column-count: 4;
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 
 .image-array-header {
   margin-block: 60px;
+}
+
+.delete-message {
+  grid-column: 1/5;
+}
+.delete-message button {
+  font-size: 20px;
+  height: 48px;
+}
+.delete-message > * {
+  display: inline-block;
 }
 
 /*# sourceMappingURL=style.css.map */

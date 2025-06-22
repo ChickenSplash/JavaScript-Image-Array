@@ -1,11 +1,12 @@
 @use "../utilities/" as *;
 @use "../modules/" as *;
+@use "sass:color";
 
 .image-controls {
     background-color: $theme-color-dark-1;
     font-size: 1.25rem;
     padding: 20px;
-    margin-top: 60px;
+    margin-top: 30px;
     border-radius: 5px;
 
     input, select {
@@ -70,13 +71,11 @@
             &:nth-child(1) {
                 border-top-right-radius: 0px;
                 border-bottom-right-radius: 0px;
-                border-right: 0px;
             }
 
             &:nth-child(3) {
                 border-top-left-radius: 0px;
                 border-bottom-left-radius: 0px;
-                border-left: 0px;
             }
         }
 
@@ -128,6 +127,12 @@
         select {
             height: 100%;
             width: 100%;
+
+            &:hover {
+                border: 1px $theme-trim solid;
+                background-color: color.adjust($theme-color-dark-2, $lightness: -10%);
+                cursor: pointer;
+            }
         }
     }
 
@@ -152,9 +157,16 @@
     }
 }
 
-.popup {
-    padding: 20px;
-    font-weight: bold;
-    font-size: 1.25rem;
-    text-align: center;
+.message.container {
+    position: relative;
+    
+    .popup {
+        position: absolute;
+        width: 100%;
+        padding: 15px;
+        border-radius: 5px;
+        font-weight: bold;
+        font-size: 1.25rem;
+        text-align: center;
+    }
 }

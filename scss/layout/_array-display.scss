@@ -2,37 +2,67 @@
 @use "../utilities/" as *;
 
 .container.image-array {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: repeat(2, 250px);
+    grid-auto-rows: 250px;
+    gap: 20px;
     background-color: $theme-color-dark-1;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
-    column-count: 1;    
-    column-gap: 10px;
-    padding: 10px;
-    min-height: 900px;
+    padding: 20px;
+
+    .img-container {
+        display: block;
+        position: relative;
+        
+        button {
+            display: none;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            height: 48px;
+        }
+
+        &:hover button {
+            display: block;
+        }
+    }
 
     img {
+        object-fit: cover;
         width: 100%;
-        height: auto;
+        height: 100%;
         display: block;
-        margin-bottom: 10px;
         border-radius: 4px;
-        max-height: 255px;
-        object-fit: cover;  
     }
 
     @include breakpoint("small") {
-        column-count: 2;
+        grid-template-columns: repeat(2, 1fr);
     }
 
     @include breakpoint("large") {
-        column-count: 3;
+        grid-template-columns: repeat(3, 1fr);
     }
 
     @include breakpoint("x-large") {
-        column-count: 4;
+        grid-template-columns: repeat(4, 1fr);
     }
 }
 
 .image-array-header {
     margin-block: 60px;
+}
+
+.delete-message {
+    grid-column: 1 / 5;
+
+    button {
+        font-size: 20px;
+        height: 48px;
+    }
+
+    & > * {
+        display: inline-block;
+    }
 }
