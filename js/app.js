@@ -96,6 +96,7 @@ function refreshImageArray() {
             
             const img = document.createElement("img"); // add the image
             img.src = pictureUrl;
+            img.alt = "Random Image";
     
             const deleteBtn = document.createElement("button"); // add the button and its functionality
             deleteBtn.textContent = "X";
@@ -118,14 +119,14 @@ function refreshImageArray() {
         
         if (imageCollections[emailSelect.value].length === 0) { // is the currently selected array empty?
             // if so, add the button allowing the user to delete the email/collection
-            const deleteMessage = document.createElement('div');
-            deleteMessage.className = 'delete-message';
+            const deleteMessage = document.createElement("div");
+            deleteMessage.className = "delete-message";
             
             const heading1 = document.createElement('h2');
-            heading1.textContent = 'Looks empty in here...';
+            heading1.textContent = "Looks empty in here...";
 
-            const deleteEmailBtn = document.createElement('button');
-            deleteEmailBtn.textContent = 'Delete Collection';
+            const deleteEmailBtn = document.createElement("button");
+            deleteEmailBtn.textContent = "Delete Collection";
             deleteEmailBtn.addEventListener("click", () => {
                 delete imageCollections[emailSelect.value];
                 updateSelection();
@@ -133,8 +134,8 @@ function refreshImageArray() {
                 showPopUp("Collection Deleted", "#007000");
             });
 
-            const heading2 = document.createElement('h2');
-            heading2.textContent = '?';
+            const heading2 = document.createElement("h2");
+            heading2.textContent = "?";
 
             deleteMessage.appendChild(heading1);
             deleteMessage.appendChild(deleteEmailBtn);

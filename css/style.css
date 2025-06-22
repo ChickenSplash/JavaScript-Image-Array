@@ -367,6 +367,7 @@ button:hover {
 }
 .delete-message button {
   font-size: 20px;
+  margin-inline: 10px;
   height: 48px;
 }
 .delete-message > * {

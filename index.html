@@ -13,12 +13,12 @@
     <div class="image-preview">
         <div class="image-container">
             <div class="loader"></div>
-            <img id="randomImage" src="">
+            <img id="randomImage" src="#" alt="Random Image">
         </div>
     </div>
     <div class="container image-controls">
         <div class="arrow-button">
-            <button id="prev-btn" onclick="prevImage()" class="btn"><</button>
+            <button id="prev-btn" onclick="prevImage()" class="btn">&lt;</button>
             <span class="counter">0</span>
             <button id="next-btn" onclick="nextImage()" class="btn">></button>
         </div>
@@ -34,7 +34,7 @@
             <input id="height" type="number" placeholder="Height" name="height" max="9999" value="720">
         </div>
         <div class="add-email">
-            <input id="email" type="text" placeholder="Add an Email" name="notemail">
+            <input id="email" type="text" placeholder="Add an Email" name="notemail" maxlength="128">
             <button onclick="addEmail()" class="btn">
                 <span>+</span>
             </button>
