@@ -86,7 +86,7 @@ function updateArrayHeader() {
     if (emailSelect.value) { // does the selection have an existing email?
         header.innerHTML = `Collection for ${emailSelect.value}`;
     } else {
-        header.innerHTML = `No emails detected. To start, add an email, fetch an image, and add it to your desired collection`
+        header.innerHTML = `No collections detected. To start, add an email, fetch an image, and add it to your desired collection`
     }
     
     imageArrayHeader.appendChild(header);
@@ -132,8 +132,8 @@ function refreshImageArray() {
             const deleteMessage = document.createElement("div");
             deleteMessage.className = "delete-message";
             
-            const heading1 = document.createElement('h2');
-            heading1.textContent = "Looks empty in here...";
+            const heading = document.createElement('h2');
+            heading.textContent = "Looks empty in here... Fetch an image and add it to this collection. Or";
 
             const deleteEmailBtn = document.createElement("button");
             deleteEmailBtn.textContent = "Delete Collection";
@@ -145,12 +145,8 @@ function refreshImageArray() {
                 showPopUp("Collection Deleted", "#007000");
             });
 
-            const heading2 = document.createElement("h2");
-            heading2.textContent = "? Or fetch an image and add it to this collection.";
-
-            deleteMessage.appendChild(heading1);
+            deleteMessage.appendChild(heading);
             deleteMessage.appendChild(deleteEmailBtn);
-            deleteMessage.appendChild(heading2);
 
             imageArray.appendChild(deleteMessage);
         }
@@ -177,19 +173,7 @@ function addToCollection() {
 
 // the object that actually contains the list of images that is assigned to the email
 
-const imageCollections = {
-    "email@example.com": [
-        "https://fastly.picsum.photos/id/330/1280/720.jpg?hmac=KDp5Bdt2uCJB714pteQPfv723GLJxsTH--dfFwQxxxo",
-        "https://fastly.picsum.photos/id/365/1280/720.jpg?hmac=UZFdP-gnW-Jge1X1kpN6m2R_ePTo1C8r_XK80XBBQPU",
-        "https://fastly.picsum.photos/id/1066/1280/720.jpg?hmac=ccSBWaWM3h_3guS9T5hxEUd8Ni9rIcY9EUZ6FqOfO94",
-        "https://fastly.picsum.photos/id/550/1280/720.jpg?hmac=8qb-fEWEhgTPHak-vcdpnML5gwwMlLGMzTgcLnoOtbQ",
-        "https://fastly.picsum.photos/id/570/1280/720.jpg?hmac=ypTJWG9MdelciTtvJYf30s2t5sjQmXeLpPfyovO7dao",
-        "https://fastly.picsum.photos/id/834/1280/720.jpg?hmac=Qk7p_1EXRscPFUuOQU9rODLbpL1QWg0vq8AL5W1vJWI",
-    ],
-    "newemail@example.com": [
-        "https://fastly.picsum.photos/id/71/1280/720.jpg?hmac=BTk-Z1ogc_yRAGH3UoPRuQPkhS5m1AGHHI_asivUpGQ",
-    ],
-};
+const imageCollections = {};
 
 const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
