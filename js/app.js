@@ -79,14 +79,24 @@ const imageArrayHeader = document.querySelector(".image-array-header");
 
 // refresh the images array display
 
+function updateArrayHeader() {
+    imageArrayHeader.innerHTML = "";
+    const header = document.createElement("h2");
+    
+    if (emailSelect.value) { // does the selection have an existing email?
+        header.innerHTML = `Collection for ${emailSelect.value}`;
+    } else {
+        header.innerHTML = `No emails detected. To start, add an email, fetch an image, and add it to your desired collection`
+    }
+    
+    imageArrayHeader.appendChild(header);
+}
+
 function refreshImageArray() {
     imageArray.innerHTML = "";
+    updateArrayHeader();
     
     if (emailSelect.value) { // does an email exist?
-        imageArrayHeader.innerHTML = "";
-        const header = document.createElement("h2");
-        header.innerHTML = `Collection for ${emailSelect.value}`;
-        imageArrayHeader.appendChild(header);
 
         for (let pictureUrl of imageCollections[emailSelect.value]) { // for each url inside the email collection, add image as well as the delete button that then deletes itself from the collection
             const imgContainer = document.createElement("a"); // add the image container
@@ -131,11 +141,12 @@ function refreshImageArray() {
                 delete imageCollections[emailSelect.value];
                 updateSelection();
                 refreshImageArray();
+                updateArrayHeader();
                 showPopUp("Collection Deleted", "#007000");
             });
 
             const heading2 = document.createElement("h2");
-            heading2.textContent = "?";
+            heading2.textContent = "? Or fetch an image and add it to this collection.";
 
             deleteMessage.appendChild(heading1);
             deleteMessage.appendChild(deleteEmailBtn);
