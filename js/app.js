@@ -77,7 +77,6 @@ const imageArrayHeader = document.querySelector(".image-array-header");
 // refresh the images array display
 
 function updateArrayHeader() {
-    console.log("function called")
     imageArrayHeader.innerHTML = "";
     const header = document.createElement("h2");
     
@@ -108,7 +107,6 @@ function refreshImageArray() {
                 delete imageCollections[emailSelect.value];
                 updateSelection();
                 refreshImageArray();
-                console.log("calling function")
                 updateArrayHeader();
                 showPopUp("Collection Deleted", "#007000");
             });
@@ -147,7 +145,7 @@ function refreshImageArray() {
                 imageArray.appendChild(imgContainer);
             }
         }
-        
+
         updateArrayHeader();
     } else {
         updateArrayHeader();
