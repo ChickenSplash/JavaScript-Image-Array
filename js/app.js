@@ -91,64 +91,58 @@ function updateArrayHeader() {
 
 function refreshImageArray() {
     imageArray.innerHTML = "";
-    
-    if (emailSelect.value) { // does an email exist?
-        if (imageCollections[emailSelect.value].length === 0) { // is the currently selected array empty?
-            // if so, add the button allowing the user to delete the email/collection
-            const deleteMessage = document.createElement("div");
-            deleteMessage.className = "delete-message";
-            
-            const heading = document.createElement('h2');
-            heading.textContent = "Looks empty in here... Fetch an image and add it to this collection. Or";
+    updateArrayHeader();
 
-            const deleteEmailBtn = document.createElement("button");
-            deleteEmailBtn.textContent = "Delete Collection";
-            deleteEmailBtn.addEventListener("click", () => {
-                delete imageCollections[emailSelect.value];
-                updateSelection();
-                refreshImageArray();
-                updateArrayHeader();
-                showPopUp("Collection Deleted", "#007000");
-            });
-
-            deleteMessage.appendChild(heading);
-            deleteMessage.appendChild(deleteEmailBtn);
-
-            imageArray.appendChild(deleteMessage);
-        } else {
-            for (let pictureUrl of imageCollections[emailSelect.value]) { // for each url inside the email collection, add image as well as the delete button that then deletes itself from the collection
-                const imgContainer = document.createElement("a"); // add the image container
-                imgContainer.classList.add("img-container");
-                imgContainer.href = pictureUrl;
-                imgContainer.setAttribute("target", "_blank");
-                
-                const img = document.createElement("img"); // add the image
-                img.src = pictureUrl;
-                img.alt = "Random Image";
+    if (imageCollections[emailSelect.value].length === 0) { // is the currently selected array empty?
+        // if so, add the button allowing the user to delete the email/collection
+        const deleteMessage = document.createElement("div");
+        deleteMessage.className = "delete-message";
         
-                const deleteBtn = document.createElement("button"); // add the button and its functionality
-                deleteBtn.textContent = "X";
-                deleteBtn.addEventListener("click", (event) => {
-                    event.preventDefault();
-                    const imgSrc = event.target.parentElement.querySelector("img").src;
-                    const imgIndex = imageCollections[emailSelect.value].indexOf(imgSrc);
-                    if (imgIndex !== -1) { // did the url exist?
-                        imageCollections[emailSelect.value].splice(imgIndex, 1);
-                        refreshImageArray();
-                        showPopUp("Image Deleted", "#007000");
-                    }
-                });
-        
-                imgContainer.appendChild(img);
-                imgContainer.appendChild(deleteBtn);
-                
-                imageArray.appendChild(imgContainer);
-            }
-        }
+        const heading = document.createElement('h2');
+        heading.textContent = "Looks empty in here... Fetch an image and add it to this collection. Or";
 
-        updateArrayHeader();
+        const deleteEmailBtn = document.createElement("button");
+        deleteEmailBtn.textContent = "Delete Collection";
+        deleteEmailBtn.addEventListener("click", () => {
+            delete imageCollections[emailSelect.value];
+            updateSelection();
+            refreshImageArray();
+            showPopUp("Collection Deleted", "#007000");
+        });
+
+        deleteMessage.appendChild(heading);
+        deleteMessage.appendChild(deleteEmailBtn);
+        
+        imageArray.appendChild(deleteMessage);
     } else {
-        updateArrayHeader();
+        for (let pictureUrl of imageCollections[emailSelect.value]) { // for each url inside the email collection, add image as well as the delete button that then deletes itself from the collection
+            const imgContainer = document.createElement("a"); // add the image container
+            imgContainer.classList.add("img-container");
+            imgContainer.href = pictureUrl;
+            imgContainer.setAttribute("target", "_blank");
+            
+            const img = document.createElement("img"); // add the image
+            img.src = pictureUrl;
+            img.alt = "Random Image";
+    
+            const deleteBtn = document.createElement("button"); // add the button and its functionality
+            deleteBtn.textContent = "X";
+            deleteBtn.addEventListener("click", (event) => {
+                event.preventDefault();
+                const imgSrc = event.target.parentElement.querySelector("img").src;
+                const imgIndex = imageCollections[emailSelect.value].indexOf(imgSrc);
+                if (imgIndex !== -1) { // did the url exist?
+                    imageCollections[emailSelect.value].splice(imgIndex, 1);
+                    refreshImageArray();
+                    showPopUp("Image Deleted", "#007000");
+                }
+            });
+    
+            imgContainer.appendChild(img);
+            imgContainer.appendChild(deleteBtn);
+            
+            imageArray.appendChild(imgContainer);
+        }
     }
 }
 
@@ -157,35 +151,32 @@ function refreshImageArray() {
 emailSelect.addEventListener("change", refreshImageArray);
 
 function addToCollection() {
-    if (emailSelect.value) { // does the image url or email exist?
-        if (!imageCollections[emailSelect.value].includes(previouslyLoadedImages[currentIndex])) { // if so, does the currently selected email not have this url in its array?
-            imageCollections[emailSelect.value].push(previouslyLoadedImages[currentIndex]);
-            refreshImageArray();
-            showPopUp("Added to current collection", "#007000");
-        } else {
-            showPopUp("Image already in current collection");
-        }
-    } else {
+    if (!emailSelect.value) { // does the image url or email not exist?
         showPopUp("Add an email first");
+    } else if (imageCollections[emailSelect.value].includes(previouslyLoadedImages[currentIndex])) { // does the currently selected email have this url in its array?
+        showPopUp("Image already in current collection");
+    } else {
+        imageCollections[emailSelect.value].push(previouslyLoadedImages[currentIndex]);
+        refreshImageArray();
+        showPopUp("Added to current collection", "#007000");
     }
 }
 
 function addEmail() {
     const emailInput = document.querySelector("#email");
     const email = emailInput.value.trim().toLowerCase();
-    if (emailRegex.test(email)) { // is it a valid email?
-        if (!(email in imageCollections)) { // does it not exist? run this to add email
-            imageCollections[email] = [];
-            updateSelection();
-            emailSelect.value = email;
-            emailInput.value = "";
-            refreshImageArray();
-            showPopUp("Email added", "#007000");
-        } else {
-            showPopUp("Email already exists");
-        }
-    } else {
+    
+    if (!emailRegex.test(email)) { // invalid email?
         showPopUp("Invalid email");
+    } else if ((email in imageCollections)) {
+        showPopUp("Email already exists");
+    } else {
+        imageCollections[email] = [];
+        updateSelection();
+        emailSelect.value = email;
+        emailInput.value = "";
+        refreshImageArray();
+        showPopUp("Email added", "#007000");
     }
 }
 
