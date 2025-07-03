@@ -93,6 +93,10 @@ function refreshImageArray() {
     imageArray.innerHTML = "";
     updateArrayHeader();
 
+    if (!imageCollections[emailSelect.value]) { // no email exists? dont run this function
+        return;
+    }
+
     if (imageCollections[emailSelect.value].length === 0) { // is the currently selected array empty?
         // if so, add the button allowing the user to delete the email/collection
         const deleteMessage = document.createElement("div");
